@@ -1,0 +1,139 @@
+
+<html>
+<head>
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            padding-top: 60px;
+        }
+
+        nav {
+            background-color: #4267B2;
+            color: black;
+            padding: 10px 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background-image: url('/static/assets/images/1.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+     nav h1 {
+            color: black;
+            text-decoration: none;
+            margin: 0 670px;
+            font-weight: bold;
+            font-size: 20px;
+            text-algin: center;
+        }
+      /* Styles for the profile container */
+.profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Adjust as needed */
+}
+
+/* Styles for the profile picture */
+.profile-picture img {
+    width: 150px; /* Adjust as needed */
+    height: 150px; /* Adjust as needed */
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #fff; /* Adjust border color as needed */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Adjust box shadow properties as needed */
+}
+
+/* Styles for the profile details */
+.profile-details {
+    margin-left: 20px; /* Adjust as needed */
+}
+
+/* Styles for the profile title */
+.profile-title {
+    font-size: 28px; /* Adjust as needed */
+    font-weight: bold;
+    color: #333; /* Adjust color as needed */
+}
+
+/* Styles for the profile bio */
+.profile-bio {
+    margin-top: 15px; /* Adjust as needed */
+    font-size: 18px; /* Adjust as needed */
+    color: #555; /* Adjust color as needed */
+}
+
+/* Styles for the edit profile link */
+.edit-profile-link {
+    display: inline-block;
+    margin-top: 20px; /* Adjust as needed */
+    text-decoration: none;
+    color: #1877f2; /* Adjust color as needed */
+    font-weight: bold;
+    border: 1px solid #1877f2; /* Adjust border color as needed */
+    padding: 8px 16px; /* Adjust padding as needed */
+    border-radius: 5px; /* Adjust border radius as needed */
+}
+
+/* Hover style for the edit profile link */
+.edit-profile-link:hover {
+    background-color: #1877f2; /* Adjust background color as needed */
+    color: #fff; /* Adjust color as needed */
+}
+
+
+                footer {
+            background-color: #4267B2;
+            color: black;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-image: url('/static/assets/images/1.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div style="display: flex; align-items: center;">
+        <a href="{% url 'home' %}" style="display: flex; align-items: center;">
+            <img src="/static/assets/images/back.png" alt="Logo" width="20" height="20" style="margin-right: 20px;">
+        </a>
+        <h1 style=" flex: 1; text-align: center;">Trang cá nhân</h1>
+    </div>
+</nav>
+  <div class="profile">
+    <div class="profile-picture">
+        <img src="{{ user_profile.profile_picture.url }}" alt="Profile Picture">
+    </div>
+    <div class="profile-details">
+        <p class="profile-title">{{ user_profile.user.username }}</p>
+        <p class="profile-bio">{{ user_profile.bio }}</p>
+        <a class="edit-profile-link" href="{% url 'edit_profile' %}">Edit Profile</a>
+    </div>
+</div>
+
+<footer>
+        <p>@ 2023 phap - Bản quyền thuộc về chúng tôi.</p>
+    </footer>
+</body>
+</html>
+
+
+
+

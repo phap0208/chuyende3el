@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trang chủ</title>
+    <link rel="icon" href="/static/assets/images/education.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style>
+        /* CSS cho thanh điều hướng (nav) */
+        nav {
+            background-color: #4267B2;
+            color: black;
+            padding-top: 10px ;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background-image: url('/static/assets/images/1.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        nav a {
+            color: black;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* CSS cho phần thông tin người dùng và liên kết đăng nhập */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.greeting {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+.username {
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc; /* Adjust the color and size as needed */
+    padding-bottom: 10px; /* Adjust the padding as needed */
+    margin-bottom: 10px; /* Adjust the margin as needed */
+}
+.profile-user{
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc; /* Điều chỉnh màu sắc và kích thước nếu cần thiết */
+    border-top : 20px;
+    padding: 10px 10px; /* Điều chỉnh padding để giữ cho chiều cao không bị thay đổi */
+    margin-right: 10px; /* Điều chỉnh margin nếu cần thiết */
+    display: inline-block; /* Thêm thuộc tính này để ngăn chữ bị nhảy xuống */
+}
+.logout-user{
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 10px; /* Điều chỉnh padding để giữ cho chiều cao không bị thay đổi */
+    margin-right: 10px; /* Điều chỉnh margin nếu cần thiết */
+    display: inline-block; /* Thêm thuộc tính này để ngăn chữ bị nhảy xuống */
+}
+.auth-links {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    right: 0; /* Thêm thuộc tính này để đẩy ra bên phải */
+}
+
+.auth-links a {
+    color: black;
+    padding: 20px 10px;
+    text-decoration: none;
+    display: block;
+}
+
+.auth-links a:hover {
+    background-color: purple;
+}
+
+.submenu {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #ccc; /* Thêm đường gạch dưới cho toàn bộ submenu */
+
+}
+
+}
+.right-links a {
+    color: black;
+    padding: 10px 10px;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #ddd; /* Thêm đường gạch dưới */
+}
+
+.right-links a:last-child {
+    border-bottom: none; /* Loại bỏ đường gạch dưới cho phần tử cuối cùng */
+}
+/* Để thay đổi màu chữ khi di chuột qua */
+.submenu a:hover {
+    color: purple; /* Màu chữ khi di chuột qua */
+}
+
+.dropdown:hover .auth-links {
+    display: block; /* Hiển thị menu con khi hover vào "Xin chào" */
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.auth-links a {
+    display: block;
+    padding: 15px;
+    border: 30px 30px;
+    margin: 10px 10px;
+    text-decoration: none;
+    color: #333; /* Màu chữ */
+}
+
+.auth-links a:hover {
+    background-color: #f0f0f0; /* Màu nền khi hover vào liên kết */
+}
+
+        /* CSS cho tiêu đề và danh sách khóa học */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding-top: 60px;
+            background-image: url('/static/assets/images/4.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3 {
+            font-weight: bold;
+            color: #333;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin-top: 5px;
+        }
+
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .header-text {
+            font-weight: bold;
+            color: transparent;
+            -webkit-text-stroke: .5px #111112;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin-top: 5px;
+            background-image: linear-gradient(#00e7f0, #0055f0);
+            background-repeat: no-repeat;
+            -webkit-background-clip: text;
+            background-position: -633px 0;
+            animation: animateText 6s linear infinite;
+        }
+
+        @keyframes animateText {
+            0%, 95%, 100% {
+                background-position: -633px 0;
+            }
+            65%, 85% {
+                background-position: 0 0;
+            }
+        }
+
+          .course-section {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        text-algin: center;
+        align-items: center;
+        background-color: white;
+        border: 1px solid #ddd;
+        padding: 30px;
+        margin: 10px;
+        border-radius: 16px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .course-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1; /* Move the image to the background */
+    }
+
+    .course-text {
+        flex: 1;
+        max-width: 600px;
+        padding: 20px;
+        z-index: 1; /* Bring text and button to the front */
+    }
+        .course-info {
+            flex-grow: 1;
+        }
+
+        .lesson-button {
+            background-color: #4d42b2bf;
+            color: white;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 16px;
+            transition: background-color 0.3s;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .lesson-button:hover {
+            background-color: purple;
+        }
+
+        .lesson-button:focus {
+            outline: none;
+        }
+
+
+footer {
+    background-color: #4267B2;
+    color: black;
+    text-align: center;
+    padding:  0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    background-image: url('/static/assets/images/1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: space-around; /* Adjusted to horizontally align elements */
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+    font-weight: bold;
+    padding-bottom: -20px
+}
+.social-menu {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Vertically align icons in the social menu */
+    margin-top: 30px;
+}
+.social-icon {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.social-links {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 10px;
+    text-align: center;
+    top: 100%;
+}
+
+.social-links a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 0;
+    display: block;
+}
+
+.social-links a:hover {
+    background-color: #ddd;
+}
+
+.home-sci {
+    margin: 25px 0 40px;
+}
+
+.home-sci a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 2px solid #8000f0;
+    border-radius: 50%;
+    font-size: 20px;
+    color: #8000f0;
+    text-decoration: none;
+    margin-left: 12px;
+    transition: .5s;
+}
+
+.home-sci a:hover {
+    background-color: #8000f0;
+    color: #fff;
+    border-color: #8000f0;
+    box-shadow: 0 0 10px #8000f0;
+}
+.courses-list {
+    display: block; /* Hiển thị danh sách khóa học mặc định */
+}
+
+#search-results {
+    display: none; /* Ẩn kết quả tìm kiếm ban đầu */
+}
+
+        /* Thêm CSS cho phần tìm kiếm */
+        .search-box {
+            text-align: center
+            margin-top: 20px;
+        }
+
+        #search-input {
+            width: 300px;
+            padding: 10px;
+            border-radius: 20px;
+        }
+
+        #search-button {
+            background-color: #4d42b2bf;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        #search-button:hover {
+            background-color: purple;
+        }
+
+        #search-button:focus {
+            outline: none;
+        }
+    .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 8px;
+}
+    </style>
+    <script>
+        function goToLesson(lessonId) {
+            window.location.href = "/lessons/" + lessonId + "/";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        {% block nav %}
+    <nav>
+    <div class="home">
+        <a href="{% url 'home' %}" style="display: flex; align-items: center;">
+            <img src="/static/assets/images/education.png" alt="Logo" width="50" height="50" style="margin-right: 10px;">
+            <span> Trang chủ </span>
+        </a>
+    </div>
+        {% block div %}
+    <div>
+        <a href="{% url 'huong_dan_su_dung' %}">Hướng dẫn sử dụng</a>
+    </div>
+    <div class="search-box">
+        <form id="search-form">
+            <input type="text" id="search-input" name="q" placeholder="Tìm kiếm...">
+            <button id="search-button" type="button">Tìm kiếm</button>
+        </form>
+        <div id="search-error" style="display: none; color: blue;">Hãy nhập chữ để tìm kiếm.</div>
+    </div>
+    <div class="user-info">
+        {% if user.is_authenticated %}
+       <div class="dropdown">
+    <span class="greeting">
+   <img src="{{ profile_picture_url }}" alt="Profile Picture" class="avatar">
+    </span>
+    <div class="auth-links">
+        <div class="submenu">
+            <p class="username">{{ user.username }} </p>
+            <a href="{% url 'profile_view' user.id%}" class="profile-user"><span>Trang cá nhân</span></a>
+            <a href="{% url 'logout' %}" class="logout-user"><span style="margin-right: 10px; white-space: nowrap;">Đăng xuất</span></a>
+        </div>
+    </div>
+</div>
+        {% else %}
+        <a href="{% url 'login' %}">Đăng nhập</a>
+        <a href="{% url 'signup' %}">Đăng ký</a>
+        {% endif %}
+    </div>
+        {% endblock %}
+</nav>
+
+         {% endblock %}
+</header>
+
+    <div id="search-results" style="display: none;">
+          <h1 style="text-align: center;">Kết quả tìm kiếm</h1>
+        <ul id="search-results-list">
+
+        </ul>
+    </div>
+    {% block content %}
+    <div class="courses-list">
+        {% if user.is_authenticated %}
+        <div class="center-content">
+            <h1 class="header-text">CHÀO MỪNG TỚI KHÓA HỌC TIẾNG ANH</h1>
+            <h2>Danh sách khóa học</h2>
+        </div>
+        {% for course in courses %}
+
+        <section class="course-section">
+            <div class="course-text">
+                 {% if course.image %}
+                <img src="{{ course.image.url }}" class="course-image">
+                {% endif %}
+                <h3>{{ course.title }}</h3>
+                <p>Người dạy: {{ course.instructor }}</p>
+                <p>Mô tả: {{ course.description }}</p>
+
+                <div class="enroll-button">
+                <a href="{% url 'course_lessons' course.id %}" class="lesson-button">Xem khóa học</a>
+            </div>
+            </div>
+        </section>
+        {% endfor %}
+        {% else %}
+        <p>Xin vui lòng đăng nhập hoặc đăng ký để xem danh sách khóa học.</p>
+        {% endif %}
+    </div>
+    {% endblock %}
+    <div style="height: 200px;"></div>
+{% block footer %}
+    <footer>
+        <div>
+            <p> &copy; 2023 phap - Bản quyền thuộc về chúng tôi.</p>
+            </div>
+
+    </footer>
+{% endblock %}
+<script>
+    var searchResultsDisplayed = false;
+    var searchPerformed = false;
+
+    function performSearch() {
+        if (searchPerformed) {
+            return;
+        }
+
+        searchPerformed = true;
+
+        var query = document.getElementById("search-input").value.toLowerCase();
+
+        if (query.trim() === "") {
+            document.getElementById("search-error").style.display = "block";
+            setTimeout(function() {
+                document.getElementById("search-error").style.display = "none";
+            }, 1000);
+            searchPerformed = false;
+            return;
+        } else {
+            document.getElementById("search-error").style.display = "none";
+        }
+
+        var courses = document.querySelectorAll(".course-section");
+        var searchResults = [];
+
+        courses.forEach(function(course) {
+            var courseTitle = course.querySelector("h3").textContent.toLowerCase();
+            if (courseTitle.includes(query)) {
+                searchResults.push(course);
+            }
+        });
+
+        var coursesList = document.querySelector(".courses-list");
+        var searchResultsList = document.getElementById("search-results-list");
+        searchResultsList.innerHTML = "";
+
+        if (searchResults.length > 0) {
+            coursesList.style.display = "none";
+            searchResults.forEach(function(result) {
+                searchResultsList.appendChild(result.cloneNode(true));
+            });
+            document.getElementById("search-results").style.display = "block";
+            searchResultsDisplayed = true;
+        } else {
+            coursesList.style.display = "block";
+            document.getElementById("search-results").style.display = "none";
+            searchResultsDisplayed = false;
+        }
+    }
+
+    document.getElementById("search-button").addEventListener("click", function() {
+        performSearch();
+    });
+
+    document.getElementById("search-input").addEventListener("input", function() {
+        // Thêm đoạn mã sau để tự động thực hiện tìm kiếm khi người dùng thay đổi nội dung ô tìm kiếm
+        if (!searchResultsDisplayed) {
+            performSearch();
+        }
+    });
+</script>
+
+
+</body>
+</html>

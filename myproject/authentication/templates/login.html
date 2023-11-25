@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Đăng Nhập</title>
+    <link rel="icon" href="/static/assets/images/ux.png" type="image/x-icon">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css'>
+    {% load static %}
+    <style>
+        body {
+             font-family: Arial, sans-serif;
+        background-image: url("{% static 'assets/images/1.jpg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        overflow: hidden; /* Vô hiệu hóa thanh trượt */
+    position: relative; /* Ensure the container is positioned relative to the body */
+        }
+/* Add the flying-object class for the animation */
+.flying-object {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #a142b2bf; /* Change the color or use an image for your flying object */
+    border-radius: 50%;
+    animation: fly 5s linear infinite; /* Adjust the animation duration and timing function as needed */
+}
+.object1 {
+    top: 50vh;
+    right: 20vw;
+}
+
+.object2 {
+    top: 90vh;
+    left: 60vw;
+}
+
+.object3 {
+    top: 10vh;
+    left: 30vw;
+}
+.object 4 {
+    top: 150vh;
+    left: 70vw;
+}
+.object 5 {
+    top: 140vh;
+    right: 90vw;
+}
+.object 6 {
+    top: 170vh;
+    right: 100vw;
+}
+/* Keyframes for the flying animation */
+@keyframes fly {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    25% {
+        transform: translateX(50vw) translateY(-20vh);
+    }
+    50% {
+        transform: translateX(100vw) translateY(0);
+    }
+    75% {
+        transform: translateX(50vw) translateY(20vh);
+    }
+    100% {
+        transform: translateX(0) translateY(0);
+    }
+}
+      .container {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Transparent white background */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+}
+       .login label,
+.login input,
+.login button,
+.login p {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease-in-out forwards;
+    animation-delay: 0.3s;
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h2 {
+    text-align: center;
+}
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 87%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 16px;
+        }
+
+.login__submit {
+	background: #fff;
+	font-size: 14px;
+	margin-top: 30px;
+	padding: 16px 20px;
+	border-radius: 26px;
+	border: 1px solid #D4D3E8;
+	text-transform: uppercase;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	color: #4C489D;
+	box-shadow: 0px 2px 2px #5C5696;
+	cursor: pointer;
+	transition: .2s;
+}
+
+.login__submit:active,
+.login__submit:focus,
+.login__submit:hover {
+	border-color: #6A679E;
+	outline: none;
+}
+
+.button__icon {
+	font-size: 24px;
+	margin-left: auto;
+	color: #7875B5;
+}
+a {
+    text-decoration: none;
+    color: #333;
+    transition: transform 0.2s;
+}
+
+a:hover {
+    color: blue;
+    transform: scale(1.1);
+}
+
+/* Apply flying object animation to the form container */
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Đăng Nhập</h2>
+        <form  method="post" class="login">
+            {% csrf_token %}
+            <label for="username">Tên đăng nhập:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Mật khẩu:</label>
+            <input type="password" id="password" name="password" required>
+        <button class="button login__submit">
+					<span class="button__text">ĐĂNG NHẬP </span>
+					<i class="button__icon fas fa-chevron-right"></i>
+				</button>
+            <p>Nếu chưa có tài khoản, <a href="{% url 'signup' %}">Đăng Ký Ngay</a></p>
+        </form>
+    </div>
+ <div class="flying-object object1"></div>
+    <div class="flying-object object2"></div>
+    <div class="flying-object object3"></div>
+    <div class="flying-object object4"></div>
+    <div class="flying-object object5"></div>
+    <div class="flying-object object6"></div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

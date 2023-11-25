@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Kiểm Tra</title>
+    <link rel="icon" href="/static/assets/images/education.png" type="image/x-icon">
+    <style>
+
+.header {
+    background-color: #008CBA;
+    color: black;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-image: url('/static/assets/images/1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.footer {
+     background-color: #008CBA;
+    color: black;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    background-image: url('/static/assets/images/1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+        body {
+            font-family: Arial, sans-serif;
+            padding-top: 60px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0 auto;
+        }
+        h2 {
+            font-size: 20px;
+            text-align: center;
+            padding-top: 60px;
+        }
+        p {
+            font-size: 18px;
+        }
+        .test-description {
+        font-size: 16px;
+        color: #333;
+        vertical-align: top;
+    }
+         #timer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 10px; /* Chiều cao 100% của viewport */
+        padding-bottom: 10px;
+    }
+.test.description{
+        border: 1px solid #ccc;
+        padding-top: 20px;
+        background-color: white;
+}
+    /* Căn giữa các phần tử bên trong container */
+    #timer,
+    #timeout-message {
+        text-align: center;
+    }
+        #timer {
+            font-size: 24px;
+            font-weight: bold;
+
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        legend {
+            font-weight: bold;
+        }
+        input[type="radio"]:checked ~ .option {
+            margin-right: 5px;
+             background: paleturquoise;
+        }
+       input[type="submit"] {
+    background-color: #008CBA;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+.questions-container{
+ padding-top:30px;
+}
+
+    input[type="submit"]:hover {
+    background-color: #005F82;
+}
+     #prevButton {
+        background-color: #008CBA;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    #prevButton:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    /* CSS cho nút Next */
+    #nextButton {
+        background-color: #008CBA;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    #nextButton:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+
+    </style>
+</head>
+<body>
+    <nav class="header" title="về bài học ">
+     <div>
+        <a href="{% url 'lesson_detail' test.id %}" style="display: flex; align-items: center;">
+            <img src="/static/assets/images/back.png" alt="Logo" width="20" height="20" style="margin-right: 20px;">
+        </a>
+         </div>
+         <h1>{{ test.title }}</h1>
+        </nav>
+
+    <div id="timer-container">
+    <p> Thời gian còn lại : <span id="timer">--:--</span></p>
+    <div id="timeout-message" style="display: none;">Hết giờ</div>
+    </div>
+
+      <form method="post" action="{% url 'submit_test' test.id %}" class="quiz-form">
+        {% csrf_token %}
+          <p class="test.description ">{{ test.description | safe  }}</p>
+        <div class="questions-container">
+            {% for question in questions %}
+            <div class="question">
+                    <p>{{ question.text }}</p>
+                    <label>
+                        <input type="radio" name="question_{{ question.id }}" value="1"> {{ question.choice_1 }}
+                    </label><br>
+                    <label>
+                        <input type="radio" name="question_{{ question.id }}" value="2"> {{ question.choice_2 }}
+                    </label><br>
+                    <label>
+                        <input type="radio" name="question_{{ question.id }}" value="3"> {{ question.choice_3 }}
+                    </label><br>
+                    <label>
+                        <input type="radio" name="question_{{ question.id }}" value="4"> {{ question.choice_4 }}
+                    </label><br>
+                </div>
+            {% endfor %}
+        </div>
+          <div >
+        <input type="button" id="prevButton" value="Previous" onclick="showQuestion(-1)">
+        <input type="button" id="nextButton" value="Next" onclick="showQuestion(1)">
+        <input type="submit" value="Submit">
+
+          </div>
+    </form>
+
+<script>
+
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    var interval = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = 0; // Hết giờ
+            document.getElementById("timeout-message").style.display = "block";
+            document.getElementById("quiz-form").submit(); // Tự động gửi biểu mẫu khi hết giờ
+        }
+    }, 1000);
+}
+
+window.onload = function () {
+    var oneHour = 60 * 60, // 1 giờ tính bằng giây
+        display = document.querySelector('#timer');
+
+    // Lưu thời gian bắt đầu
+    var startTime = Date.now();
+
+    startTimer(oneHour, display);
+
+    // Truyền thời gian bắt đầu đến trang kết quả thông qua query string
+    document.getElementById("quiz-form").action += "?startTime=" + startTime;
+};
+
+    var currentQuestion = 0;
+    var questions = document.querySelectorAll(".question");
+
+    function showQuestion(step) {
+        if (currentQuestion + step >= 0 && currentQuestion + step < questions.length) {
+            questions[currentQuestion].style.display = "none";
+            currentQuestion += step;
+            questions[currentQuestion].style.display = "block";
+
+            // Update the visibility of next and previous buttons
+            document.getElementById("prevButton").disabled = currentQuestion === 0;
+            document.getElementById("nextButton").disabled = currentQuestion === questions.length - 1;
+        }
+    }
+
+    // Initially, hide all questions except the first one
+    for (var i = 1; i < questions.length; i++) {
+        questions[i].style.display = "none";
+    }
+
+    // Disable the "Previous" button initially
+    document.getElementById("prevButton").disabled = true;
+
+    // Update the "Next" and "Previous" buttons based on the current question
+    showQuestion(0);
+    function onSubmit() {
+    clearInterval(interval); // Dừng đồng hồ đếm thời gian
+    // Hiển thị kết quả và thời gian lên trang
+    var resultContainer = document.querySelector('.result-container');
+    var score = calculateScore(); // Viết hàm tính điểm dựa trên câu trả lời
+    var timeTaken = oneHour - timer; // Thời gian làm bài
+    resultContainer.innerHTML = '<p>Điểm: ' + score + '</p><p>Thời gian làm bài: ' + timeTaken + ' giây</p>';
+    resultContainer.style.display = 'block';
+    // Ẩn form câu hỏi
+    document.querySelector('.questions-container').style.display = 'none';
+}
+
+// Hàm tính điểm (thay thế bằng logic thực tế của bạn)
+function calculateScore() {
+    // Điểm có thể tính dựa trên câu trả lời của người dùng
+    // Thay thế bằng logic tính điểm thực tế của bạn
+    return 0;
+}
+
+</script>
+
+
+<div style="height: 100px;"></div>
+<div class="footer"> <!-- Gắn lớp CSS cho footer -->
+        <p>@ 2023 phap - Bản quyền thuộc về chúng tôi.</p>
+    </div>
+</body>
+</html>

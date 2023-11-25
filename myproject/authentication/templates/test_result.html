@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả bài kiểm tra</title>
+    <link rel="icon" href="/static/assets/images/education.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f2f2f2;
+            padding-top: 80px;
+        }
+         h1 {
+            font-size: 24px;
+            margin: 0 auto;
+        }
+        p {
+            font-size: 18px;
+            margin: 10px;
+        }
+        .result-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #00557D;
+        }
+.header {
+    background-color: #008CBA;
+    color: black;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-image: url('/static/assets/images/1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.header h1 {
+    flex-grow: 1;
+}
+
+        .footer {
+            background-color: #008CBA;
+            color: black;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+            background-image: url('/static/assets/images/1.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+<nav class="header" title="Trở về trang chủ ">
+     <div>
+        <a href="{% url 'home' %}" style="display: flex; align-items: center;">
+            <img src="/static/assets/images/back.png" alt="Logo" width="20" height="20" style="margin-right: 20px;">
+        </a>
+         </div>
+    <h1 class="text">Kết quả bài kiểm tra</h1>
+</nav>
+
+<div class="result-container">
+    <p> {{ test.title }}</p>
+    <p>Số câu trả lời đúng: {{ score }}</p>
+<p>Thời gian làm bài: <span id="timer-result">{{ test.end_time }}</span></p>
+    <a href="{{ course_lessons_url }}" class="back-button">Back</a>
+</div>
+<div style="height: 100px;"></div>
+<div class="footer">
+    <p>@ 2023 phap - Bản quyền thuộc về chúng tôi.</p>
+</div>
+<!-- Trang kết quả -->
+<script>
+function onSubmit() {
+    clearInterval(interval); // Dừng đồng hồ đếm thời gian
+
+    // Tính thời gian làm bài (thời gian đã trôi qua từ thời điểm bắt đầu đến thời điểm nộp bài)
+    var endTime = Date.now();
+    var timeTaken = Math.floor((endTime - startTime) / 1000); // Chuyển đổi thành giây
+
+    // Hiển thị kết quả và thời gian lên trang
+    var resultContainer = document.querySelector('.result-container');
+    var score = calculateScore(); // Viết hàm tính điểm dựa trên câu trả lời
+    var formattedTime = formatTime(oneHour - timeTaken); // Định dạng thời gian
+
+   // Trong hàm onSubmit()
+resultContainer.innerHTML = '<p>Điểm: ' + score + '</p><p>Thời gian làm bài: ' + formatTime(timeTaken) + '</p>';
+    resultContainer.style.display = 'block';
+
+    // Hiển thị thời gian làm bài ở phần kết quả
+    var timerResult = document.getElementById('timer');
+    timerResult.textContent = formattedTime;
+
+    // Ẩn form câu hỏi
+    document.querySelector('.questions-container').style.display = 'none';
+
+    // Chuyển hướng đến trang kết quả với thời gian làm bài trong query string
+    var redirectUrl = '/test_result?timeTaken=' + timeTaken;
+    window.location.href = redirectUrl;
+}
+
+// Hàm định dạng thời gian
+function formatTime(seconds) {
+    var hours = Math.floor(seconds / 3600);
+    var minutes = Math.floor((seconds % 3600) / 60);
+    var remainingSeconds = seconds % 60;
+
+    var displayHours = (hours < 10 ? '0' : '') + hours;
+    var displayMinutes = (minutes < 10 ? '0' : '') + minutes;
+    var displaySeconds = (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
+
+    return displayHours + ':' + displayMinutes + ':' + displaySeconds;
+}
+</script>
+</body>
+</html>

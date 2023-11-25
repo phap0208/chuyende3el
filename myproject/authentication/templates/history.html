@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử làm bài kiểm tra</title>
+    <!-- Đường dẫn đến file CSS nếu có -->
+    <!-- <link rel="stylesheet" href="path/to/your/styles.css"> -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f2f2f2;
+            padding-top: 80px;
+        }
+        h1 {
+            font-size: 24px;
+            margin: 0 auto;
+        }
+        #history-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        #history-list li {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Lịch sử làm bài kiểm tra</h1>
+
+    <ul id="history-list"></ul>
+
+    <script>
+        window.onload = function () {
+            var historyList = document.getElementById("history-list");
+
+            // Thực hiện Ajax hoặc Fetch để lấy dữ liệu từ server
+            fetch('url/to/your/history/data')
+                .then(response => response.json())
+                .then(historyData => {
+                    // Loop through historyData and create list items
+                    historyData.forEach(function (historyItem) {
+                        var listItem = document.createElement("li");
+
+                        var content = document.createTextNode(
+                            historyItem.testTitle + " - Điểm: " + historyItem.score + " - Thời gian làm bài: " + historyItem.timeTaken
+                        );
+
+                        listItem.appendChild(content);
+                        historyList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error fetching history data:', error));
+        };
+    </script>
+</body>
+</html>
